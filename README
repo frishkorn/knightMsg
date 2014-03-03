@@ -1,1 +1,13 @@
 knightMsg v1.0
+
+This script will take user input, convert it to a Straddling Checkerboard cipher, and apply a user selected key to encrypt the message.
+
+EXAMPLES
+
+Please enter MESSAGE: Hello
+
+CIPHER: 25528283
+
+Please enter the KEY: 38282473
+
+MESSAGE: 53700656
