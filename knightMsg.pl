@@ -24,6 +24,7 @@ Please enter the KEY: 38282473
 
 =head1 DESCRIPTION
 
+2014/03/03 - Reduced code size by converting the array into a hash.
 2014/01/20 - First version of the script has been written. Next step will be to modify it so it'll also decrypt messages.
 
 =head1 AUTHOR
@@ -32,7 +33,7 @@ C. Frishkorn
 
 =cut
 
-$main::VERSION = "1.0";
+$main::VERSION = "1.1.108";
 
 use warnings;
 use strict;
@@ -45,77 +46,29 @@ if ( $inputMessage =~ m/^\d/ ) {
 	print "\nFunction to decrypt a message hasn't been added yet!\n";
 	exit;
 }
- 
-# Take plain-text and cipher it into numbers only.
-my @preCipher = split(//, $inputMessage);
+
+# Take plain-text and cipher it into numbers only. 
+my @preCipher = split( //, $inputMessage );
+@preCipher = map {lc} @preCipher;
 my @postCipher;
+my %hashCipher = (
+	a => "0", b => "20", c => "21", d => "22", e => "5", f => "23",
+	g => "24", h => "25", i => "8", j => "26", k => "27", l => "28",
+	m => "29", n => "4", o => "3", p => "60", q => "61", r => "9",
+	s => "7", t => "1", u => "62", v => "63", w => "64", x => "65",
+	y => "66", z => "67", " " => "68", "." => "68", "#" => "69"
+);
 foreach my $preCipher ( @preCipher ) {
-	if          ( $preCipher =~ s/a/0/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/b/20/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/c/21/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/d/22/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/e/5/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/f/23/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/g/24/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/h/25/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/i/8/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/j/26/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/k/27/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/l/28/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/m/29/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/n/4/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/o/3/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/p/60/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/q/61/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/r/9/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/s/7/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/t/1/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/u/62/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/v/63/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/w/64/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/x/65/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/y/66/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/z/67/i ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/\./68/ ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/\s/68/ ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ s/#/69/ ) {
-		push ( @postCipher, $preCipher );
-		} elsif ( $preCipher =~ m/\d/ ) {
-		push ( @postCipher, $preCipher );
-		push ( @postCipher, $preCipher );
-		push ( @postCipher, $preCipher );
-			} else {
-				print "\nInvalid character!\n";
-				exit;
+	if ( $preCipher =~ m/\d/ ) {
+		foreach my $iii (0..2) {
+			push ( @postCipher, $preCipher );
 		}
+	} elsif ( $preCipher = $hashCipher{$preCipher}) {
+		push ( @postCipher, $preCipher );
+	} else {
+		print "\nInvalid character!\n";
+		exit;
+	}
 }
 my @indCipher;
 my $cmpCipher = join ( '', @postCipher );
@@ -148,7 +101,8 @@ while (defined($firstShift = shift(@keyCipher))) {
 	push ( @addCipher, $math );
 }
 
-# Print encrypted message.
+# Print encrypted message then exit.
 print "\n";
 print ( '             MESSAGE: ', @addCipher );
 print "\n\n";
+exit;
