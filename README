@@ -1,13 +1,27 @@
-knightMsg v1.0
-
-This script will take user input, convert it to a Straddling Checkerboard cipher, and apply a user selected key to encrypt the message.
+DESCRIPTION
+-----------
+This script will take user input, convert it to a Straddling Checkerboard cipher, and apply a user selected key to encrypt the message. To decrypt message just enter in message and key.
 
 EXAMPLES
+--------
+PLEASE ENTER MESSAGE: Hello
 
-Please enter MESSAGE: Hello
+              CIPHER: 2505282803
 
-CIPHER: 25528283
+PLEASE ENTER THE KEY: 3828247373
 
-Please enter the KEY: 38282473
+             MESSAGE: 5323429176
+			 
+PLEASE ENTER MESSAGE: 5323429176
 
-MESSAGE: 53700656
+PLEASE ENTER THE KEY: 3828247373
+
+            FINAL MESSAGE: HELLO
+
+			
+CHANGELOG
+---------
+2014/06/05 - Finished work on the decryption function. Program is now functional.
+2014/03/30 - Started work on the decryption portion of this script. Still a lot of work to do.
+2014/03/03 - Reduced code size by converting the array into a hash.
+2014/01/20 - First version of the script has been written. Next step will be to modify it so it'll also decrypt messages.

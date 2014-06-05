@@ -6,7 +6,7 @@ knightMsg.pl
 
 =head1 SYNOPSIS
 
-This script will take user input, convert it to a Straddling Checkerboard cipher, and apply a user selected key to encrypt the message.
+This script will take user input, convert it to a Straddling Checkerboard cipher, and apply a user selected key to encrypt the message. To decrypt message just enter in message and key.
 
 =head1 OPTIONS
 
@@ -14,16 +14,23 @@ No options at this time.
 
 =head1 EXAMPLES
 
-Please enter MESSAGE: Hello
+PLEASE ENTER MESSAGE: Hello
 
-              CIPHER: 25528283
+              CIPHER: 2505282803
 
-Please enter the KEY: 38282473
+PLEASE ENTER THE KEY: 3828247373
 
-             MESSAGE: 53700656
+             MESSAGE: 5323429176
+			 
+PLEASE ENTER MESSAGE: 5323429176
+
+PLEASE ENTER THE KEY: 3828247373
+
+            FINAL MESSAGE: HELLO
 
 =head1 DESCRIPTION
 
+2014/06/05 - Finished work on the decryption function. Program is now functional.
 2014/03/30 - Started work on the decryption portion of this script. Still a lot of work to do.
 2014/03/03 - Reduced code size by converting the array into a hash.
 2014/01/20 - First version of the script has been written. Next step will be to modify it so it'll also decrypt messages.
@@ -34,17 +41,16 @@ C. Frishkorn
 
 =cut
 
-$main::VERSION = "1.2.167";
+$main::VERSION = "1.3.178";
 
 use warnings;
 use strict;
-use Data::Dumper;
 
 sub cipherMsg( $ );
 sub decipherMsg( $ );
 
 # Ask user to input plain-text.
-print "\nPlease enter MESSAGE: ";
+print "\nPLEASE ENTER MESSAGE: ";
 my $inputMessage = <STDIN>;
 chomp $inputMessage;
 if ( $inputMessage =~ m/^\d/ ) {
@@ -61,22 +67,21 @@ sub cipherMsg( $ )
 	@preCipher = map {lc} @preCipher;
 	my @postCipher;
 	my %hashCipher = (
-		a => "00", b => "20", c => "21", d => "22", e => "5", f => "23", ### a => "00" is a workaround. Perl doesn't play nice with the single 0, gets lost at @postCipher line 73.
-		g => "24", h => "25", i => "8", j => "26", k => "27", l => "28",
-		m => "29", n => "4", o => "3", p => "60", q => "61", r => "9",
-		s => "7", t => "1", u => "62", v => "63", w => "64", x => "65",
+		a => "00", b => "20", c => "21", d => "22", e => "05", f => "23",
+		g => "24", h => "25", i => "08", j => "26", k => "27", l => "28",
+		m => "29", n => "04", o => "03", p => "60", q => "61", r => "09",
+		s => "07", t => "01", u => "62", v => "63", w => "64", x => "65",
 		y => "66", z => "67", " " => "68", "." => "68", "#" => "69"
 	);
 	foreach my $preCipher ( @preCipher ) {
 		if ( $preCipher =~ m/\d/ ) {
-			foreach my $iii (0..2) {
+			foreach my $iii (0..3) {
 				push ( @postCipher, $preCipher );
 			}
 		} elsif ( $preCipher = $hashCipher{$preCipher}) {
 			push ( @postCipher, $preCipher );
 		} else {
-			print "\nInvalid character!\n";
-			print Dumper( \@postCipher );
+			print "\nINVALID CHARACTER!\n";
 			exit;
 		}
 	}
@@ -90,11 +95,11 @@ sub cipherMsg( $ )
 	print ( '              CIPHER: ', @indCipher );
 
 	# Ask user to input a key.
-	print "\n\nPlease enter the KEY: ";
+	print "\n\nPLEASE ENTER THE KEY: ";
 	my $key = <STDIN>;
 	chomp $key;
 	if ( $key !~ m/^\d/ ) {
-		print "\nInvalid key entered, please use only digits!\n";
+		print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
 		exit;
 	}
 	my @keyCipher = split( //, $key );
@@ -115,7 +120,7 @@ sub cipherMsg( $ )
 	print "\n";
 	print ( '             MESSAGE: ', @addCipher );
 	print "\n\n";
-	exit;
+	exit();
 }
 
 # Decryption Sub-Routine.
@@ -124,11 +129,11 @@ sub decipherMsg( $ )
 	my @preKey = split( //, $inputMessage );
 	
 	# Ask user to input a key.
-	print "\nPlease enter the KEY: ";
+	print "\nPLEASE ENTER THE KEY: ";
 	my $key = <STDIN>;
 	chomp $key;
 	if ( $key !~ m/^\d/ ) {
-		print "\nInvalid key entered, please use only digits!\n";
+		print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
 		exit;
 	}
 	my @keyCipher = split( //, $key );
@@ -142,26 +147,32 @@ sub decipherMsg( $ )
 			$secondShift = $secondShift + 10;
 		}
 		my $math = $secondShift - $firstShift;
-		push (@subCipher, $math );
+		push ( @subCipher, $math );
 	}
+	# Merge single digit numbers to double digit numbers.
+	my $combCipher = join ( '', @subCipher );
+	my $twoCipher = $combCipher;
+    my @combCipher = ( $twoCipher =~ m/.{2}/g );
 		
 	# Convert cipher to plain-text.
-	### TODO: FIND A WAY TO PAIR 2'S AND 6'S. MAY NEED TO DO THIS FOR 0'S BECAUSE OF THE 0 HASH PROBLEM IN THE ENCRYPT FUNCTION.
-	###
-	print Dumper( \@subCipher ); ### DEBUGGING: SHOW CIPHER BEFORE CONVERSION
 	my @postCipher;
 	my %hashCipher = (
-		00 => "a", 20 => "b", 21 => "c", 22 => "d", 5 => "e", 23 => "f",
-		24 => "g", 25 => "h", 8 => "i", 26 => "j", 27 => "k", 28 => "l",
-		29 => "m", 4 => "n", 3 => "o", 60 => "p", 61 => "q", 9 => "r",
-		7 => "s", 1 => "t", 62 => "u", 63 => "v", 64 => "w", 65 => "x",
-		66 => "y", 67 => "z", 68 => ".", 69 => "#"
+		"00" => "a", "20" => "b", "21" => "c", "22" => "d", "05" => "e", "23" => "f",
+		"24" => "g", "25" => "h", "08" => "i", "26" => "j", "27" => "k", "28" => "l",
+		"29" => "m", "04" => "n", "03" => "o", "60" => "p", "61" => "q", "09" => "r",
+		"07" => "s", "01" => "t", "62" => "u", "63" => "v", "64" => "w", "65" => "x",
+		"66" => "y", "67" => "z", "68" => ".", "69" => "#"
 	);
-	foreach my $subCipher ( @subCipher ) {
-		if ( $subCipher = $hashCipher{$subCipher}) {
-			push ( @postCipher, $subCipher );
+	foreach my $combCipher ( @combCipher ) {
+		if ( $combCipher = $hashCipher{$combCipher}) {
+			push ( @postCipher, $combCipher );
 		}
 	}
+	my $postCipher = join ( '', @postCipher );
+	
 	# Print decrypted message then exit.
-	print Dumper( \@postCipher ); ### DEBUGGING: SHOW MESSAGE AFTER CIPHER HAS BEEN CONVERTED.
+	print "\n";
+	print ( '       FINAL MESSAGE: ', uc $postCipher );
+	print "\n\n";
+	exit();
 }
