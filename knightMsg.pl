@@ -26,10 +26,11 @@ PLEASE ENTER MESSAGE: 5323429176
 
 PLEASE ENTER THE KEY: 3828247373
 
-            FINAL MESSAGE: HELLO
+       FINAL MESSAGE: HELLO
 
 =head1 DESCRIPTION
 
+2015/12/01 - Cleaned up code.
 2014/06/05 - Finished work on the decryption function. Program is now functional.
 2014/03/30 - Started work on the decryption portion of this script. Still a lot of work to do.
 2014/03/03 - Reduced code size by converting the array into a hash.
@@ -41,7 +42,7 @@ C. Frishkorn
 
 =cut
 
-$main::VERSION = "1.3.178";
+$main::VERSION = "1.4.180";
 
 use warnings;
 use strict;
@@ -49,7 +50,7 @@ use strict;
 sub cipherMsg( $ );
 sub decipherMsg( $ );
 
-# Ask user to input plain-text.
+# Ask user to input message.
 print "\nPLEASE ENTER MESSAGE: ";
 my $inputMessage = <STDIN>;
 chomp $inputMessage;
