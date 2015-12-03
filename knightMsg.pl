@@ -42,7 +42,7 @@ C. Frishkorn
 
 =cut
 
-$main::VERSION = "1.4.180";
+$main::VERSION = "1.5A.000";
 
 use warnings;
 use strict;
@@ -83,7 +83,8 @@ sub cipherMsg( $ )
 			push ( @postCipher, $preCipher );
 		} else {
 			print "\nINVALID CHARACTER!\n";
-			exit;
+			###exit;
+			
 		}
 	}
 	my @indCipher;
