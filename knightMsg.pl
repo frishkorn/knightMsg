@@ -30,6 +30,7 @@ PLEASE ENTER THE KEY: 3828247373
 
 =head1 DESCRIPTION
 
+2015/12/02 - Fixed bug in cipherMsg subroutine.
 2015/12/01 - Cleaned up code.
 2014/06/05 - Finished work on the decryption function. Program is now functional.
 2014/03/30 - Started work on the decryption portion of this script. Still a lot of work to do.
@@ -42,7 +43,7 @@ C. Frishkorn
 
 =cut
 
-$main::VERSION = "1.5A.000";
+$main::VERSION = "1.5B.000";
 
 use warnings;
 use strict;
@@ -83,7 +84,7 @@ sub cipherMsg( $ )
 			push ( @postCipher, $preCipher );
 		} else {
 			print "\nINVALID CHARACTER!\n";
-			###exit;
+			exit;
 			
 		}
 	}
