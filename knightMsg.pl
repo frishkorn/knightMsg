@@ -89,7 +89,8 @@ sub cipherMsg( $ )
 			
 		}
 	}
-	my @indCipher;
+    # Look into flipping this around using reverse or array functions to simply code.
+    my @indCipher;
 	my $cmpCipher = join ( '', @postCipher );
 	my @cmpCipher = split(//, $cmpCipher);
 	foreach my $cmpCipher ( @cmpCipher ) {
