@@ -76,7 +76,8 @@ sub cipherMsg( $ )
 		y => "66", z => "67", " " => "68", "." => "68", "#" => "69"
 	);
 	foreach my $preCipher ( @preCipher ) {
-		if ( $preCipher =~ m/\d/ ) {
+        # If it matches a digit we first need to add a #, but only once. This helps the decryption routine know the difference between numbers and letters.
+        if ( $preCipher =~ m/\d/ ) {
 			foreach my $iii (0..3) {
 				push ( @postCipher, $preCipher );
 			}
