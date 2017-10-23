@@ -30,6 +30,7 @@ PLEASE ENTER THE KEY: 3828247373
 
 =head1 DESCRIPTION
 
+2017/10/23 - Fixed issue #15.
 2015/12/02 - Fixed bug in cipherMsg subroutine.
 2015/12/01 - Cleaned up code.
 2014/06/05 - Finished work on the decryption function. Program is now functional.
@@ -43,7 +44,7 @@ C. Frishkorn
 
 =cut
 
-$main::VERSION = "1.5B.000";
+$main::VERSION = "1.6B";
 
 use warnings;
 use strict;
