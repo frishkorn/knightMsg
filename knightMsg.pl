@@ -30,6 +30,7 @@ PLEASE ENTER THE KEY: 3828247373
 
 =head1 DESCRIPTION
 
+2017/10/23 - Started work on issue #6.
 2017/10/23 - Fixed issue #15.
 2015/12/02 - Fixed bug in cipherMsg subroutine.
 2015/12/01 - Cleaned up code.
@@ -44,7 +45,7 @@ C. Frishkorn
 
 =cut
 
-$main::VERSION = "1.6B";
+$main::VERSION = "1.7B";
 
 use warnings;
 use strict;
@@ -81,6 +82,7 @@ sub cipherMsg( $ )
 	foreach my $preCipher ( @preCipher ) {
         # If it matches a digit we first need to add a #, but only once. This helps the decryption routine know the difference between numbers and letters.
         if ( $preCipher =~ m/\d/ ) {
+            
 			foreach my $iii (0..3) {
 				push ( @postCipher, $preCipher );
 			}
@@ -89,9 +91,12 @@ sub cipherMsg( $ )
 		} else {
 			print "\nINVALID CHARACTER!\n";
 			exit;
-			
 		}
 	}
+    
+    ### DEBUG - Check array.
+    print Dumper(\@postCipher);
+    <>;
     
     # Split postCipher array into individual digits to make math operations easier.
     my $cmpCipher = join ( '', @postCipher );
