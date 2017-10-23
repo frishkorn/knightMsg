@@ -48,6 +48,8 @@ $main::VERSION = "1.5B.000";
 use warnings;
 use strict;
 
+use Data::Dumper;
+
 sub cipherMsg( $ );
 sub decipherMsg( $ );
 
@@ -89,10 +91,11 @@ sub cipherMsg( $ )
 			
 		}
 	}
-    # Look into flipping this around using reverse or array functions to simply code.
+    
+    # Split postCipher array into individual digits to make math operations easier.
+    my $cmpCipher = join ( '', @postCipher );
+    my @cmpCipher = split(//, $cmpCipher);
     my @indCipher;
-	my $cmpCipher = join ( '', @postCipher );
-	my @cmpCipher = split(//, $cmpCipher);
 	foreach my $cmpCipher ( @cmpCipher ) {
 		push ( @indCipher, $cmpCipher );
 	}
