@@ -80,8 +80,8 @@ sub cipherMsg( $ )
 		y => "66", z => "67", " " => "68", "." => "68", "#" => "69"
 	);
 	foreach my $preCipher ( @preCipher ) {
-        # Pad digits and add # to begining and end of numbers.
-        if ( $preCipher =~ m/\d/ ) {
+        # Need to deal with digits and hash symbol here.
+        if ( $preCipher =~ m/\x23/ ) {
 			foreach my $iii (0..2) {
 				push ( @postCipher, $preCipher );
 			}
