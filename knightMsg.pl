@@ -81,13 +81,18 @@ sub cipherMsg( $ )
 	);
 	foreach my $preCipher ( @preCipher ) {
         # Need to deal with digits and hash symbol here.
-        if ( $preCipher =~ m/\x23/ ) {
-			foreach my $iii (0..2) {
-				push ( @postCipher, $preCipher );
-			}
-		} elsif ( $preCipher = $hashCipher{$preCipher}) {
+        if ( $preCipher =~ m/\x23|\d/ ) {
+		if ( $preCipher =~ m/\x23/) {
+			$preCipher = $hashCipher{$preCipher};
 			push ( @postCipher, $preCipher );
 		} else {
+			foreach my $iii (0..2) {
+			push ( @postCipher, $preCipher );
+			}
+		}
+	} elsif ( $preCipher = $hashCipher{$preCipher}) {
+			push ( @postCipher, $preCipher );
+	} else {
 			print "\nINVALID CHARACTER!\n";
 			exit;
 		}
