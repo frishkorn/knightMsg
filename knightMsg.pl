@@ -52,24 +52,24 @@ use strict;
 
 use Data::Dumper;
 
-sub cipherMsg( $ );
-sub decipherMsg( $ );
+sub cipherMsg($);
+sub decipherMsg($);
 
 # Ask user to input message.
 print "\nPLEASE ENTER MESSAGE: ";
 my $inputMessage = <STDIN>;
 chomp $inputMessage;
-if ( $inputMessage =~ m/^\d/ ) {
-	decipherMsg( $inputMessage );
+if ($inputMessage =~ m/^\d/) {
+	decipherMsg($inputMessage);
 	} else {
-		cipherMsg( $inputMessage );
+		cipherMsg($inputMessage);
 }
 
 # Encryption Sub-Routine.
-sub cipherMsg( $ )
+sub cipherMsg($)
 {
 	# Take plain-text and cipher it into numbers only.
-	my @preCipher = split( //, $inputMessage );
+	my @preCipher = split(//, $inputMessage);
 	@preCipher = map {lc} @preCipher;
 	my @postCipher;
 	my %hashCipher = (
@@ -79,19 +79,19 @@ sub cipherMsg( $ )
 		s => "07", t => "01", u => "62", v => "63", w => "64", x => "65",
 		y => "66", z => "67", " " => "68", "." => "68", "#" => "69"
 	);
-	foreach my $preCipher ( @preCipher ) {
+	foreach my $preCipher (@preCipher) {
         # Need to deal with digits and hash symbol here.
-        if ( $preCipher =~ m/\x23|\d/ ) {
-		if ( $preCipher =~ m/\x23/) {
+        if ($preCipher =~ m/\x23|\d/) {
+		if ($preCipher =~ m/\x23/) {
 			$preCipher = $hashCipher{$preCipher};
-			push ( @postCipher, $preCipher );
+			push (@postCipher, $preCipher);
 		} else {
 			foreach my $iii (0..2) {
-			push ( @postCipher, $preCipher );
+			push (@postCipher, $preCipher);
 			}
 		}
-	} elsif ( $preCipher = $hashCipher{$preCipher}) {
-			push ( @postCipher, $preCipher );
+	} elsif ($preCipher = $hashCipher{$preCipher}) {
+			push (@postCipher, $preCipher);
 	} else {
 			print "\nINVALID CHARACTER!\n";
 			exit;
@@ -103,74 +103,74 @@ sub cipherMsg( $ )
     <>;
     
     # Split postCipher array into individual digits to make math operations easier.
-    my $cmpCipher = join ( '', @postCipher );
+    my $cmpCipher = join ('', @postCipher);
     my @cmpCipher = split(//, $cmpCipher);
     my @indCipher;
-	foreach my $cmpCipher ( @cmpCipher ) {
-		push ( @indCipher, $cmpCipher );
+	foreach my $cmpCipher (@cmpCipher) {
+		push (@indCipher, $cmpCipher);
 	}
 	print "\n";
-	print ( '              CIPHER: ', @indCipher );
+	print ('              CIPHER: ', @indCipher);
 
 	# Ask user to input a key.
 	print "\n\nPLEASE ENTER THE KEY: ";
 	my $key = <STDIN>;
 	chomp $key;
-	if ( $key !~ m/^\d/ ) {
+	if ($key !~ m/^\d/) {
 		print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
 		exit;
 	}
-	my @keyCipher = split( //, $key );
+	my @keyCipher = split(//, $key);
 
 	# Math functions.
 	my $firstShift;
 	my @addCipher;
-	while ( defined( $firstShift = shift( @keyCipher ))) {
-		my $secondShift = shift( @indCipher );
+	while (defined($firstShift = shift(@keyCipher))) {
+		my $secondShift = shift(@indCipher);
 		my $math = $firstShift + $secondShift;
-		if ( $math >= 10 ) {
+		if ($math >= 10) {
 			$math = $math - 10;
 			}
-		push ( @addCipher, $math );
+		push (@addCipher, $math);
 	}
 
 	# Print encrypted message then exit.
 	print "\n";
-	print ( '             MESSAGE: ', @addCipher );
+	print ('             MESSAGE: ', @addCipher);
 	print "\n\n";
 	exit();
 }
 
 # Decryption Sub-Routine.
-sub decipherMsg( $ )
+sub decipherMsg($)
 {
-	my @preKey = split( //, $inputMessage );
+	my @preKey = split(//, $inputMessage);
 	
 	# Ask user to input a key.
 	print "\nPLEASE ENTER THE KEY: ";
 	my $key = <STDIN>;
 	chomp $key;
-	if ( $key !~ m/^\d/ ) {
+	if ($key !~ m/^\d/) {
 		print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
 		exit;
 	}
-	my @keyCipher = split( //, $key );
+	my @keyCipher = split(//, $key);
 
 	# Math functions.
 	my $firstShift;
 	my @subCipher;
-	while ( defined( $firstShift = shift( @keyCipher ))) {
-		my $secondShift = shift( @preKey );
-		if ( $secondShift < $firstShift ) {
+	while (defined($firstShift = shift(@keyCipher))) {
+		my $secondShift = shift(@preKey);
+		if ($secondShift < $firstShift) {
 			$secondShift = $secondShift + 10;
 		}
 		my $math = $secondShift - $firstShift;
-		push ( @subCipher, $math );
+		push (@subCipher, $math);
 	}
 	# Merge single digit numbers to double digit numbers.
-	my $combCipher = join ( '', @subCipher );
+	my $combCipher = join ('', @subCipher);
 	my $twoCipher = $combCipher;
-    my @combCipher = ( $twoCipher =~ m/.{2}/g );
+	my @combCipher = ($twoCipher =~ m/.{2}/g);
 		
 	# Convert cipher to plain-text.
 	my @postCipher;
@@ -181,16 +181,16 @@ sub decipherMsg( $ )
 		"07" => "s", "01" => "t", "62" => "u", "63" => "v", "64" => "w", "65" => "x",
 		"66" => "y", "67" => "z", "68" => ".", "69" => "#"
 	);
-	foreach my $combCipher ( @combCipher ) {
-		if ( $combCipher = $hashCipher{$combCipher}) {
-			push ( @postCipher, $combCipher );
+	foreach my $combCipher (@combCipher) {
+		if ($combCipher = $hashCipher{$combCipher}) {
+			push (@postCipher, $combCipher);
 		}
 	}
-	my $postCipher = join ( '', @postCipher );
+	my $postCipher = join ('', @postCipher);
 	
 	# Print decrypted message then exit.
 	print "\n";
-	print ( '       FINAL MESSAGE: ', uc $postCipher );
+	print ('       FINAL MESSAGE: ', uc $postCipher);
 	print "\n\n";
 	exit();
 }
