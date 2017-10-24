@@ -87,6 +87,7 @@ sub cipherMsg($)
 			push (@postCipher, $preCipher);
 		} else {
 			foreach my $iii (0..2) {
+			push (@postCipher, '0');
 			push (@postCipher, $preCipher);
 			}
 		}
