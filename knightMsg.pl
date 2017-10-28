@@ -182,9 +182,14 @@ sub decipherMsg($)
 		"07" => "s", "01" => "t", "62" => "u", "63" => "v", "64" => "w", "65" => "x",
 		"66" => "y", "67" => "z", "68" => ".", "69" => "#"
 	);
+	# Need to perform digit operations if @combCipher == 69.
 	foreach my $combCipher (@combCipher) {
-		if ($combCipher = $hashCipher{$combCipher}) {
-			push (@postCipher, $combCipher);
+		if ($combCipher =~ m/69/) {
+			print "Found 69!";
+		} else {
+			if ($combCipher = $hashCipher{$combCipher}) {
+				push (@postCipher, $combCipher);
+			}
 		}
 	}
 	my $postCipher = join ('', @postCipher);
