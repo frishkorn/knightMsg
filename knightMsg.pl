@@ -6,7 +6,7 @@ knightMsg.pl
 
 =head1 SYNOPSIS
 
-This script will take user input, convert it to a Straddling Checkerboard cipher, and apply a user selected key to encrypt the message. To decrypt message just enter in message and key.
+This script will take user input, convert it to a Straddling Checkerboard cipher, and apply a user selected key to encrypt the message. To decrypt message just enter in message and key. The pencil and paper version uses # symbols to denote the start and end of a sequence of numbers. This script is also compatible with the pencil and paper version of the cipher.
 
 =head1 OPTIONS
 
@@ -30,13 +30,13 @@ PLEASE ENTER THE KEY: 3828247373
 
 =head1 DESCRIPTION
 
-2017/10/23 - Started work on issue #6.
+2017/10/28 - Issue #6 is now fixed and script handles numbers.
 2017/10/23 - Fixed issue #15.
 2015/12/02 - Fixed bug in cipherMsg subroutine.
-2015/12/01 - Cleaned up code.
+2015/12/01 - Cleaned up script.
 2014/06/05 - Finished work on the decryption function. Program is now functional.
 2014/03/30 - Started work on the decryption portion of this script. Still a lot of work to do.
-2014/03/03 - Reduced code size by converting the array into a hash.
+2014/03/03 - Reduced script size by converting the array into a hash.
 2014/01/20 - First version of the script has been written. Next step will be to modify it so it'll also decrypt messages.
 
 =head1 AUTHOR
@@ -49,9 +49,6 @@ $main::VERSION = "1.7B";
 
 use warnings;
 use strict;
-
-### This is only here to help check the arrays for debugging. Remove when script is complete.
-use Data::Dumper;
 
 sub cipherMsg($);
 sub decipherMsg($);
