@@ -87,7 +87,7 @@ sub cipherMsg($)
 			push (@postCipher, $hashCipher{$preCipher});
 		} else {
 			foreach my $iii (0..2) {
-				push (@postCipher, '0', $preCipher);
+				push (@postCipher, '9', $preCipher);
 			}
 		}
 	} elsif ($preCipher = $hashCipher{$preCipher}) {
@@ -177,19 +177,16 @@ sub decipherMsg($)
 		"07" => "s", "01" => "t", "62" => "u", "63" => "v", "64" => "w", "65" => "x",
 		"66" => "y", "67" => "z", "68" => ".", "69" => "#"
 	);
-	# Need to perform digit operations if @combCipher == 69.
+	my $digitCount = 0;
 	foreach my $combCipher (@combCipher) {
-		### DEBUG - Print each item in the array before matching.
-		print Dumper(\$combCipher);
-		<>;
-
-		if ($combCipher =~ m/69/) {
-			push (@postCipher, $hashCipher{$combCipher});
-			# After pushing in the initial #, need to read the next three "sets" of digits.
-			
-			# Take only 1 of those three "sets" of digits and push it into the @postCipher array.
-
-			# Once another # is encountered, exit the loop.
+		# If $combCiper starts with a 9 treat as a number and remove padded digits.
+		if ($combCipher =~ m/^9/ && $digitCount < 2) {
+			delete $combCipher[0];
+			$digitCount++;
+		} elsif ($combCipher =~ m/^9/ && $digitCount > 1) {
+			$combCipher = $combCipher - 90;
+			push (@postCipher, $combCipher);
+			$digitCount = 0;
 		} else {
 			push (@postCipher, $hashCipher{$combCipher});
 		}
