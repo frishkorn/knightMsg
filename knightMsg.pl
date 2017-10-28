@@ -50,6 +50,7 @@ $main::VERSION = "1.7B";
 use warnings;
 use strict;
 
+### This is only here to help check the arrays for debugging. Remove when script is complete.
 use Data::Dumper;
 
 sub cipherMsg($);
@@ -61,8 +62,8 @@ my $inputMessage = <STDIN>;
 chomp $inputMessage;
 if ($inputMessage =~ m/^\d/) {
 	decipherMsg($inputMessage);
-	} else {
-		cipherMsg($inputMessage);
+} else {
+	cipherMsg($inputMessage);
 }
 
 # Encryption Sub-Routine.
@@ -71,7 +72,6 @@ sub cipherMsg($)
 	# Take plain-text and cipher it into numbers only.
 	my @preCipher = split(//, $inputMessage);
 	@preCipher = map {lc} @preCipher;
-	my @postCipher;
 	my %hashCipher = (
 		a => "00", b => "20", c => "21", d => "22", e => "05", f => "23",
 		g => "24", h => "25", i => "08", j => "26", k => "27", l => "28",
@@ -79,23 +79,22 @@ sub cipherMsg($)
 		s => "07", t => "01", u => "62", v => "63", w => "64", x => "65",
 		y => "66", z => "67", " " => "68", "." => "68", "#" => "69"
 	);
+	my @postCipher;
 	foreach my $preCipher (@preCipher) {
         # If message contains #, pad digits to obscure them. Otherwise push ciphered letters into array.
         if ($preCipher =~ m/\x23|\d/) {
 		if ($preCipher =~ m/\x23/) {
-			$preCipher = $hashCipher{$preCipher};
-			push (@postCipher, $preCipher);
+			push (@postCipher, $hashCipher{$preCipher});
 		} else {
 			foreach my $iii (0..2) {
-			push (@postCipher, '0');
-			push (@postCipher, $preCipher);
+				push (@postCipher, '0', $preCipher);
 			}
 		}
 	} elsif ($preCipher = $hashCipher{$preCipher}) {
-			push (@postCipher, $preCipher);
+		push (@postCipher, $preCipher);
 	} else {
-			print "\nINVALID CHARACTER!\n";
-			exit;
+		print "\nINVALID CHARACTER!\n";
+		exit;
 		}
 	}
     
@@ -169,11 +168,6 @@ sub decipherMsg($)
 	my $twoCipher = $combCipher;
 	my @combCipher = ($twoCipher =~ m/.{2}/g);
 	
-	### DEBUG - Check array.
-	print "Cipher before plain-text.\n";
-	print Dumper(\@combCipher);
-	<>;
-
 	# Convert cipher to plain-text.
 	my @postCipher;
 	my %hashCipher = (
@@ -190,12 +184,14 @@ sub decipherMsg($)
 		<>;
 
 		if ($combCipher =~ m/69/) {
-			$combCipher = $hashCipher{$combCipher};
-			push (@postCipher, $combCipher);
+			push (@postCipher, $hashCipher{$combCipher});
+			# After pushing in the initial #, need to read the next three "sets" of digits.
+			
+			# Take only 1 of those three "sets" of digits and push it into the @postCipher array.
+
+			# Once another # is encountered, exit the loop.
 		} else {
-			if ($combCipher = $hashCipher{$combCipher}) {
-				push (@postCipher, $combCipher);
-			}
+			push (@postCipher, $hashCipher{$combCipher});
 		}
 	}
 	my $postCipher = join ('', @postCipher);
