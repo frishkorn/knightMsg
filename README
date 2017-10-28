@@ -21,6 +21,7 @@ PLEASE ENTER THE KEY: 3828247373
 			
 CHANGELOG
 ---------
+2017/10/23 - Started work on issue #6.
 2017/10/23 - Fixed issue #15.
 2015/12/02 - Fixed bug in cipherMsg subroutine.
 2015/12/01 - Cleaned up code.
