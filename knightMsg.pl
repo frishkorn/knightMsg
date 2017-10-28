@@ -170,6 +170,7 @@ sub decipherMsg($)
 	my @combCipher = ($twoCipher =~ m/.{2}/g);
 	
 	### DEBUG - Check array.
+	print "Cipher before plain-text.\n";
 	print Dumper(\@combCipher);
 	<>;
 
@@ -184,8 +185,13 @@ sub decipherMsg($)
 	);
 	# Need to perform digit operations if @combCipher == 69.
 	foreach my $combCipher (@combCipher) {
+		### DEBUG - Print each item in the array before matching.
+		print Dumper(\$combCipher);
+		<>;
+
 		if ($combCipher =~ m/69/) {
-			print "Found 69!";
+			$combCipher = $hashCipher{$combCipher};
+			push (@postCipher, $combCipher);
 		} else {
 			if ($combCipher = $hashCipher{$combCipher}) {
 				push (@postCipher, $combCipher);
