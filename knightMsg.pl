@@ -80,7 +80,7 @@ sub cipherMsg($)
 		y => "66", z => "67", " " => "68", "." => "68", "#" => "69"
 	);
 	foreach my $preCipher (@preCipher) {
-        # Need to deal with digits and hash symbol here.
+        # If message contains #, pad digits to obscure them. Otherwise push ciphered letters into array.
         if ($preCipher =~ m/\x23|\d/) {
 		if ($preCipher =~ m/\x23/) {
 			$preCipher = $hashCipher{$preCipher};
@@ -99,14 +99,10 @@ sub cipherMsg($)
 		}
 	}
     
-    ### DEBUG - Check array.
-    print Dumper(\@postCipher);
-    <>;
-    
-    # Split postCipher array into individual digits to make math operations easier.
-    my $cmpCipher = join ('', @postCipher);
-    my @cmpCipher = split(//, $cmpCipher);
-    my @indCipher;
+	# Split postCipher array into individual digits to make math operations easier.
+	my $cmpCipher = join ('', @postCipher);
+	my @cmpCipher = split(//, $cmpCipher);
+	my @indCipher;
 	foreach my $cmpCipher (@cmpCipher) {
 		push (@indCipher, $cmpCipher);
 	}
@@ -172,7 +168,11 @@ sub decipherMsg($)
 	my $combCipher = join ('', @subCipher);
 	my $twoCipher = $combCipher;
 	my @combCipher = ($twoCipher =~ m/.{2}/g);
-		
+	
+	### DEBUG - Check array.
+	print Dumper(\@combCipher);
+	<>;
+
 	# Convert cipher to plain-text.
 	my @postCipher;
 	my %hashCipher = (
