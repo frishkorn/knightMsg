@@ -1,7 +1,11 @@
+VERSION
+-------
+v1.7-beta
+
 DESCRIPTION
 -----------
 This script will take user input, convert it to a Straddling Checkerboard cipher, and apply a user selected key to encrypt the message. To decrypt message just enter in message and key. The pencil and paper version uses # symbols to denote the start and end of a sequence of numbers. This script is also compatible with the pencil and paper version of the cipher.
-`
+
 EXAMPLES
 --------
 PLEASE ENTER MESSAGE: Hello
