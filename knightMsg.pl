@@ -57,6 +57,10 @@ sub decipherMsg($);
 print "\nPLEASE ENTER MESSAGE: ";
 my $inputMessage = <STDIN>;
 chomp $inputMessage;
+
+# Find the message length for key length checks.
+my $keyLength = length $inputMessage;
+
 if ($inputMessage =~ m/^\d/) {
 	decipherMsg($inputMessage);
 } else {
@@ -109,6 +113,12 @@ sub cipherMsg($)
 	print "\n\nPLEASE ENTER THE KEY: ";
 	my $key = <STDIN>;
 	chomp $key;
+
+	# Test key length and exit if the length is not equal to $keyLength.
+	if (length $key != $keyLength * 2) {
+		print "Key length doesn't match!";
+	}
+
 	if ($key !~ m/^\d/) {
 		print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
 		exit;
