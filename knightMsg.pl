@@ -30,6 +30,7 @@ PLEASE ENTER THE KEY: 3828247373
 
 =head1 DESCRIPTION
 
+2017/11/03 - Key length check is now performed issue #17.
 2017/10/28 - Issue #6 is now fixed and script handles numbers.
 2017/10/23 - Fixed issue #15.
 2015/12/02 - Fixed bug in cipherMsg subroutine.
@@ -45,13 +46,10 @@ C. Frishkorn
 
 =cut
 
-$main::VERSION = "1.7B";
+$main::VERSION = "1.8B";
 
 use warnings;
 use strict;
-
-sub cipherMsg($);
-sub decipherMsg($);
 
 # Ask user to input message.
 print "\nPLEASE ENTER MESSAGE: ";
@@ -59,7 +57,7 @@ my $inputMessage = <STDIN>;
 chomp $inputMessage;
 
 # Find the message length for key length checks.
-my $keyLength = length $inputMessage;
+my $msgLength = length $inputMessage;
 
 if ($inputMessage =~ m/^\d/) {
 	decipherMsg($inputMessage);
@@ -68,7 +66,7 @@ if ($inputMessage =~ m/^\d/) {
 }
 
 # Encryption Sub-Routine.
-sub cipherMsg($)
+sub cipherMsg
 {
 	# Take plain-text and cipher it into numbers only.
 	my @preCipher = split(//, $inputMessage);
@@ -113,14 +111,12 @@ sub cipherMsg($)
 	print "\n\nPLEASE ENTER THE KEY: ";
 	my $key = <STDIN>;
 	chomp $key;
-
-	# Test key length and exit if the length is not equal to $keyLength.
-	if (length $key != $keyLength * 2) {
-		print "Key length doesn't match!";
-	}
-
 	if ($key !~ m/^\d/) {
 		print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
+		exit;
+	}
+	if (length $key != $msgLength * 2) {
+		print "\nKEY LENGTH NEEDS TO BE EQUAL TO MESSAGE!\n";
 		exit;
 	}
 	my @keyCipher = split(//, $key);
@@ -145,7 +141,7 @@ sub cipherMsg($)
 }
 
 # Decryption Sub-Routine.
-sub decipherMsg($)
+sub decipherMsg
 {
 	my @preKey = split(//, $inputMessage);
 	
@@ -155,6 +151,10 @@ sub decipherMsg($)
 	chomp $key;
 	if ($key !~ m/^\d/) {
 		print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
+		exit;
+	}
+	if (length $key != $msgLength) {
+		print "\nKEY LENGTH NEEDS TO BE EQUAL TO MESSAGE!\n";
 		exit;
 	}
 	my @keyCipher = split(//, $key);
