@@ -30,7 +30,7 @@ PLEASE ENTER THE KEY: 3828247373
 
 =head1 DESCRIPTION
 
-2017/11/08 - Started work on issue #20.
+2017/11/08 - Key length check with digits bug fixed, issue #20.
 2017/11/03 - Key length check is now performed issue #17.
 2017/10/28 - Issue #6 is now fixed and script handles numbers.
 2017/10/23 - Fixed issue #15.
@@ -88,8 +88,9 @@ sub cipherMsg
 		} else {
 			foreach my $iii (0..2) {
 				push (@postCipher, '9', $preCipher);
-				$msgLength++;
 			}
+		# Make message length with digits equal to key.
+		$msgLength += 2;
 		}
 	} elsif ($preCipher = $hashCipher{$preCipher}) {
 		push (@postCipher, $preCipher);
@@ -119,7 +120,7 @@ sub cipherMsg
 	}
 	if (length $key != $msgLength * 2) {
 		print "\nKEY LENGTH NEEDS TO BE EQUAL TO MESSAGE!\n";
-		exit;
+ 		exit;
 	}
 	my @keyCipher = split(//, $key);
 
