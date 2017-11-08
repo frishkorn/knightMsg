@@ -98,7 +98,7 @@ sub cipherMsg
 		exit;
 		}
 	}
-    
+
 	# Split postCipher array into individual digits to make math operations easier.
 	my $cmpCipher = join ('', @postCipher);
 	my @cmpCipher = split(//, $cmpCipher);
