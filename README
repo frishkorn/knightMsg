@@ -1,6 +1,6 @@
 VERSION
 -------
-v1.8-beta
+v1.81-beta
 
 DESCRIPTION
 -----------
@@ -25,6 +25,7 @@ PLEASE ENTER THE KEY: 3828247373
 			
 CHANGELOG
 --------
+2017/11/08 - Started work on issue #20.
 2017/11/03 - Key length check is now performed issue #17.
 2017/10/28 - Issue #6 is now fixed and script handles numbers.
 2017/10/23 - Fixed issue #15.

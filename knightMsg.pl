@@ -30,6 +30,7 @@ PLEASE ENTER THE KEY: 3828247373
 
 =head1 DESCRIPTION
 
+2017/11/08 - Started work on issue #20.
 2017/11/03 - Key length check is now performed issue #17.
 2017/10/28 - Issue #6 is now fixed and script handles numbers.
 2017/10/23 - Fixed issue #15.
@@ -46,7 +47,7 @@ C. Frishkorn
 
 =cut
 
-$main::VERSION = "1.8B";
+$main::VERSION = "1.81B";
 
 use warnings;
 use strict;
@@ -87,6 +88,7 @@ sub cipherMsg
 		} else {
 			foreach my $iii (0..2) {
 				push (@postCipher, '9', $preCipher);
+				$msgLength++;
 			}
 		}
 	} elsif ($preCipher = $hashCipher{$preCipher}) {
