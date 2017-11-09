@@ -30,6 +30,7 @@ PLEASE ENTER THE KEY: 3828247373
 
 =head1 DESCRIPTION
 
+2017/11/09 - Key must now only contain digits, issue #19 fixed.
 2017/11/08 - Key length check with digits bug fixed, issue #20.
 2017/11/03 - Key length check is now performed issue #17.
 2017/10/28 - Issue #6 is now fixed and script handles numbers.
@@ -47,7 +48,7 @@ C. Frishkorn
 
 =cut
 
-$main::VERSION = "1.81B";
+$main::VERSION = "1.82B";
 
 use warnings;
 use strict;
@@ -114,7 +115,7 @@ sub cipherMsg
 	print "\n\nPLEASE ENTER THE KEY: ";
 	my $key = <STDIN>;
 	chomp $key;
-	if ($key !~ m/^\d/) {
+	if ($key =~ m/\D+/) {
 		print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
 		exit;
 	}
@@ -152,7 +153,7 @@ sub decipherMsg
 	print "\nPLEASE ENTER THE KEY: ";
 	my $key = <STDIN>;
 	chomp $key;
-	if ($key !~ m/^\d/) {
+	if ($key =~ m/\D+/) {
 		print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
 		exit;
 	}
