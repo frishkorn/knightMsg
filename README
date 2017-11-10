@@ -1,6 +1,6 @@
 VERSION
 -------
-v1.82-beta
+v1.9-beta
 
 DESCRIPTION
 -----------
@@ -25,6 +25,7 @@ PLEASE ENTER THE KEY: 3828247373
 			
 CHANGELOG
 --------
+2017/11/10 - Started work on issue #7.
 2017/11/09 - Key must now only contain digits, issue #19 fixed.
 2017/11/08 - Key length check with digits bug fixed, issue #20.
 2017/11/03 - Key length check is now performed issue #17.
