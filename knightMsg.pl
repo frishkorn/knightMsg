@@ -30,6 +30,7 @@ PLEASE ENTER THE KEY: 3828247373
 
 =head1 DESCRIPTION
 
+2017/11/10 - Started work on issue #7.
 2017/11/09 - Key must now only contain digits, issue #19 fixed.
 2017/11/08 - Key length check with digits bug fixed, issue #20.
 2017/11/03 - Key length check is now performed issue #17.
@@ -48,7 +49,7 @@ C. Frishkorn
 
 =cut
 
-$main::VERSION = "1.82B";
+$main::VERSION = "1.9B";
 
 use warnings;
 use strict;
@@ -61,10 +62,10 @@ chomp $inputMessage;
 # Find the message length for key length checks.
 my $msgLength = length $inputMessage;
 
-if ($inputMessage =~ m/^\d/) {
-	decipherMsg($inputMessage);
-} else {
+if ($inputMessage =~ m/\D+/) {
 	cipherMsg($inputMessage);
+} else {
+	decipherMsg($inputMessage);
 }
 
 # Encryption Sub-Routine.
