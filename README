@@ -1,6 +1,6 @@
 VERSION
 -------
-v1.9-beta
+v2.0
 
 DESCRIPTION
 -----------
@@ -25,15 +25,4 @@ PLEASE ENTER THE KEY: 3828247373
 			
 CHANGELOG
 --------
-2017/11/10 - Fixed issue #7, invalid key now allows retry.
-2017/11/09 - Key must now only contain digits, issue #19 fixed.
-2017/11/08 - Key length check with digits bug fixed, issue #20.
-2017/11/03 - Key length check is now performed issue #17.
-2017/10/28 - Issue #6 is now fixed and script handles numbers.
-2017/10/23 - Fixed issue #15.
-2015/12/02 - Fixed bug in cipherMsg subroutine.
-2015/12/01 - Cleaned up script.
-2014/06/05 - Finished work on the decryption function. Program is now functional.
-2014/03/30 - Started work on the decryption portion of this script. Still a lot of work to do.
-2014/03/03 - Reduced script size by converting the array into a hash.
-2014/01/20 - First version of the script has been written. Next step will be to modify it so it'll also decrypt messages.
+2017/11/10 - Version 2.0 released.
