@@ -30,6 +30,7 @@ PLEASE ENTER THE KEY: 3828247373
 
 =head1 DESCRIPTION
 
+2017/11/10 - Fixed issue #7, invalid key now allows retry.
 2017/11/09 - Key must now only contain digits, issue #19 fixed.
 2017/11/08 - Key length check with digits bug fixed, issue #20.
 2017/11/03 - Key length check is now performed issue #17.
@@ -48,7 +49,7 @@ C. Frishkorn
 
 =cut
 
-$main::VERSION = "1.82B";
+$main::VERSION = "1.9B";
 
 use warnings;
 use strict;
@@ -61,10 +62,10 @@ chomp $inputMessage;
 # Find the message length for key length checks.
 my $msgLength = length $inputMessage;
 
-if ($inputMessage =~ m/^\d/) {
-	decipherMsg($inputMessage);
-} else {
+if ($inputMessage =~ m/\D+/) {
 	cipherMsg($inputMessage);
+} else {
+	decipherMsg($inputMessage);
 }
 
 # Encryption Sub-Routine.
@@ -112,17 +113,23 @@ sub cipherMsg
 	print ('              CIPHER: ', @indCipher);
 
 	# Ask user to input a key.
-	print "\n\nPLEASE ENTER THE KEY: ";
-	my $key = <STDIN>;
-	chomp $key;
-	if ($key =~ m/\D+/) {
-		print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
-		exit;
-	}
-	if (length $key != $msgLength * 2) {
-		print "\nKEY LENGTH NEEDS TO BE EQUAL TO MESSAGE!\n";
- 		exit;
-	}
+	my $key = 0;
+	my $validKey = 0;
+	do {
+		print "\n\nPLEASE ENTER THE KEY: ";
+		$key = <STDIN>;
+		chomp $key;
+		if ($key =~ m/\D+/) {
+			print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!";
+			$validKey = 1;
+		}
+		elsif (length $key != $msgLength * 2) {
+			print "\nKEY LENGTH NEEDS TO BE EQUAL TO MESSAGE!";
+ 			$validKey = 1;
+		} else {
+			$validKey = 0;
+		}
+	} while ($validKey == 1);
 	my @keyCipher = split(//, $key);
 
 	# Math functions.
@@ -150,17 +157,23 @@ sub decipherMsg
 	my @preKey = split(//, $inputMessage);
 	
 	# Ask user to input a key.
-	print "\nPLEASE ENTER THE KEY: ";
-	my $key = <STDIN>;
-	chomp $key;
-	if ($key =~ m/\D+/) {
-		print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
-		exit;
-	}
-	if (length $key != $msgLength) {
-		print "\nKEY LENGTH NEEDS TO BE EQUAL TO MESSAGE!\n";
-		exit;
-	}
+	my $key = 0;
+	my $validKey = 0;
+	do {
+		print "\nPLEASE ENTER THE KEY: ";
+		$key = <STDIN>;
+		chomp $key;
+		if ($key =~ m/\D+/) {
+			print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
+			$validKey = 1;
+		}
+		elsif (length $key != $msgLength) {
+			print "\nKEY LENGTH NEEDS TO BE EQUAL TO MESSAGE!\n";
+			$validKey = 1;
+		} else {
+			$validKey = 0;
+		}
+	} while ($validKey == 1);
 	my @keyCipher = split(//, $key);
 
 	# Math functions.
