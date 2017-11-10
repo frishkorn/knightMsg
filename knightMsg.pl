@@ -113,17 +113,21 @@ sub cipherMsg
 	print ('              CIPHER: ', @indCipher);
 
 	# Ask user to input a key.
-	print "\n\nPLEASE ENTER THE KEY: ";
-	my $key = <STDIN>;
-	chomp $key;
-	if ($key =~ m/\D+/) {
-		print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
-		exit;
-	}
-	if (length $key != $msgLength * 2) {
-		print "\nKEY LENGTH NEEDS TO BE EQUAL TO MESSAGE!\n";
- 		exit;
-	}
+	my $key = 0;
+	my $validKey = 0;
+	do {
+		print "\n\nPLEASE ENTER THE KEY: ";
+		$key = <STDIN>;
+		chomp $key;
+		if ($key =~ m/\D+/) {
+			print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
+			$validKey = 1;
+		}
+		if (length $key != $msgLength * 2) {
+			print "\nKEY LENGTH NEEDS TO BE EQUAL TO MESSAGE!\n";
+ 			$validKey = 1;
+		}
+	} while ($validKey == 1);
 	my @keyCipher = split(//, $key);
 
 	# Math functions.
