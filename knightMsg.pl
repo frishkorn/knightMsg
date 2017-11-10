@@ -164,11 +164,11 @@ sub decipherMsg
 		$key = <STDIN>;
 		chomp $key;
 		if ($key =~ m/\D+/) {
-			print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!";
+			print "\nINVALID KEY ENTERED, PLEASE USE ONLY DIGITS!\n";
 			$validKey = 1;
 		}
 		elsif (length $key != $msgLength) {
-			print "\nKEY LENGTH NEEDS TO BE EQUAL TO MESSAGE!";
+			print "\nKEY LENGTH NEEDS TO BE EQUAL TO MESSAGE!\n";
 			$validKey = 1;
 		} else {
 			$validKey = 0;
